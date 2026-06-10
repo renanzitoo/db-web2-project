@@ -35,7 +35,7 @@ app.post('/api/items', (req, res) => {
 });
 
 // Fallback to index.html for SPA routes
-app.get('*', (req, res) => {
+app.get('/*splat', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'index.html'));
 });
 
