@@ -1,0 +1,43 @@
+const express = require('express');
+const commonController = require('../controllers/commonController');
+const authController = require('../controllers/authController');
+const gameController = require('../controllers/gameController');
+const libraryController = require('../controllers/libraryController');
+const cartController = require('../controllers/cartController');
+const wishlistController = require('../controllers/wishlistController');
+const mediaController = require('../controllers/mediaController');
+const userController = require('../controllers/userController');
+const socialController = require('../controllers/socialController');
+
+const router = express.Router();
+
+router.get('/status', commonController.status);
+router.get('/games', gameController.listGames);
+router.get('/categories', gameController.listCategories);
+router.get('/games/:id', gameController.getGameById);
+router.get('/games/feed/home', gameController.getHomeFeed);
+router.get('/games/:gameId/details', gameController.getGameDetails);
+router.get('/games/:gameId/media', mediaController.gameMedia);
+router.post('/register', authController.register);
+router.post('/login', authController.login);
+router.post('/purchase', libraryController.purchase);
+router.get('/library/:userId', libraryController.library);
+router.get('/users/:userId/profile', userController.profile);
+router.get('/cart/:userId', cartController.list);
+router.post('/cart', cartController.add);
+router.delete('/cart/:userId/:gameId', cartController.remove);
+router.post('/cart/:userId/checkout', cartController.checkout);
+router.get('/wishlist/:userId', wishlistController.list);
+router.post('/wishlist', wishlistController.add);
+router.delete('/wishlist/:userId/:gameId', wishlistController.remove);
+router.get('/users/:userId/achievements', socialController.userAchievements);
+router.get('/games/:gameId/achievements', socialController.achievementsByGame);
+router.get('/users/:userId/friends', socialController.friends);
+router.get('/activity', socialController.activities);
+router.get('/games/:gameId/reviews', socialController.reviewsByGame);
+router.post('/reviews', socialController.createReview);
+router.post('/friends', socialController.requestFriend);
+router.patch('/friends/:friendshipId', socialController.updateFriend);
+router.delete('/friends/:friendshipId', socialController.deleteFriend);
+
+module.exports = router;
