@@ -30,6 +30,9 @@ async function removeWishlistItem(userId, gameId) {
 module.exports = {
   getWishlistByUserId,
   hasWishlistItem,
+  hasInWishlist: hasWishlistItem,
   addWishlistItem,
-  removeWishlistItem
+  addToWishlist: addWishlistItem,
+  removeWishlistItem,
+  removeFromWishlist: removeWishlistItem
 };

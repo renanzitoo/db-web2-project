@@ -12,9 +12,10 @@ async function findUserById(userId) {
 }
 
 async function createUser({ nome, email, senha }) {
+  const avatarUrl = `https://api.dicebear.com/7.x/pixel-art/svg?seed=${encodeURIComponent(nome)}`;
   const [result] = await db.query(
-    'INSERT INTO Usuarios (nome, email, senha, saldo_carteira, data_cadastro) VALUES (?, ?, ?, 0.00, CURDATE())',
-    [nome, email, senha]
+    'INSERT INTO Usuarios (nome, email, senha, avatar_url, saldo_carteira, data_cadastro) VALUES (?, ?, ?, ?, 0.00, CURDATE())',
+    [nome, email, senha, avatarUrl]
   );
 
   return findUserById(result.insertId);

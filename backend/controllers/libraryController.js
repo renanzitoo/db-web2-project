@@ -10,7 +10,15 @@ async function library(req, res) {
   res.json(await libraryService.getLibraryByUserId(req.params.userId));
 }
 
+async function play(req, res) {
+  const { userId, gameId } = req.params;
+  const result = await libraryService.playGame(Number(userId), Number(gameId));
+  if (result.error) return res.status(400).json({ error: result.error });
+  res.json(result);
+}
+
 module.exports = {
   purchase,
-  library
+  library,
+  play
 };
