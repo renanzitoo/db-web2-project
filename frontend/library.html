@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="no-referrer">
-    <title>Stim - Loja de Jogos</title>
+    <title>Stim - Minha Biblioteca</title>
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,8 +25,8 @@
             </div>
 
             <nav class="nav-links">
-                <a href="index.html" class="nav-item active">LOJA</a>
-                <a href="library.html" class="nav-item">BIBLIOTECA</a>
+                <a href="index.html" class="nav-item">LOJA</a>
+                <a href="library.html" class="nav-item active" id="nav-library">BIBLIOTECA</a>
                 <a href="community.html" class="nav-item">COMUNIDADE</a>
                 <a href="profile.html" class="nav-item">PERFIL</a>
             </nav>
@@ -54,24 +54,11 @@
         </div>
     </header>
 
-    <!-- SUB-NAV / CATEGORIES BAR -->
-    <div class="sub-nav-bar" id="sub-nav-categories">
-        <div class="sub-nav-container">
-            <div class="categories-list" id="header-categories-list">
-                <span class="category-tag active" id="category-all-tag">Todos os Jogos</span>
-            </div>
-            <div class="search-box">
-                <input type="text" id="game-search-input" placeholder="Buscar no stim...">
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </div>
-        </div>
-    </div>
-
     <!-- MAIN VIEWPORT CONTAINER -->
-    <main class="main-content" id="store-content-area">
+    <main class="main-content" id="library-content-area" style="max-width: 1200px; margin: 25px auto; padding: 0 20px;">
         <div class="loading-container">
             <div class="spinner"></div>
-            <p>Carregando catálogo do Stim...</p>
+            <p>Carregando sua biblioteca...</p>
         </div>
     </main>
 
@@ -90,6 +77,6 @@
 
     <!-- Scripts -->
     <script src="js/common.js"></script>
-    <script src="js/store.js"></script>
+    <script src="js/library.js"></script>
 </body>
 </html>

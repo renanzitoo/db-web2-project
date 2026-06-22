@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="no-referrer">
-    <title>Stim - Loja de Jogos</title>
+    <title>Stim - Comunidade</title>
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,9 +25,9 @@
             </div>
 
             <nav class="nav-links">
-                <a href="index.html" class="nav-item active">LOJA</a>
+                <a href="index.html" class="nav-item">LOJA</a>
                 <a href="library.html" class="nav-item">BIBLIOTECA</a>
-                <a href="community.html" class="nav-item">COMUNIDADE</a>
+                <a href="community.html" class="nav-item active" id="nav-community">COMUNIDADE</a>
                 <a href="profile.html" class="nav-item">PERFIL</a>
             </nav>
 
@@ -54,24 +54,11 @@
         </div>
     </header>
 
-    <!-- SUB-NAV / CATEGORIES BAR -->
-    <div class="sub-nav-bar" id="sub-nav-categories">
-        <div class="sub-nav-container">
-            <div class="categories-list" id="header-categories-list">
-                <span class="category-tag active" id="category-all-tag">Todos os Jogos</span>
-            </div>
-            <div class="search-box">
-                <input type="text" id="game-search-input" placeholder="Buscar no stim...">
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </div>
-        </div>
-    </div>
-
     <!-- MAIN VIEWPORT CONTAINER -->
-    <main class="main-content" id="store-content-area">
+    <main class="main-content" id="community-content-area" style="max-width: 1200px; margin: 25px auto; padding: 0 20px;">
         <div class="loading-container">
             <div class="spinner"></div>
-            <p>Carregando catálogo do Stim...</p>
+            <p>Carregando feed da comunidade...</p>
         </div>
     </main>
 
@@ -88,8 +75,30 @@
         </div>
     </footer>
 
+    <!-- MODAL: ADD FRIEND -->
+    <div class="modal-overlay" id="friend-modal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>ADICIONAR AMIGO</h3>
+                <button class="close-btn" id="btn-close-friend-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-desc">Digite o ID do usuário que deseja adicionar como amigo:</p>
+                <form id="friend-form">
+                    <div class="form-group">
+                        <label for="friend-id-input">ID DO USUÁRIO</label>
+                        <input type="number" id="friend-id-input" required placeholder="Ex: 2" min="1">
+                    </div>
+                    <div id="friend-error-msg" class="error-text" style="display: none;"></div>
+                    <div id="friend-success-msg" class="success-text" style="display: none;"></div>
+                    <button type="submit" class="btn btn-primary btn-block">Enviar Solicitação de Amizade</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Scripts -->
     <script src="js/common.js"></script>
-    <script src="js/store.js"></script>
+    <script src="js/community.js"></script>
 </body>
 </html>

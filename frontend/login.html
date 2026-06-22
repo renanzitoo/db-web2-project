@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    <title>Stim - Iniciar Sessão</title>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS Customizado -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .auth-container {
+            max-width: 420px;
+            margin: 60px auto;
+            background-color: var(--bg-panel);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 30px;
+        }
+        .auth-header {
+            margin-bottom: 25px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+        }
+        .auth-header h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-white);
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP HEADER -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-area" onclick="window.location.href='index.html'">
+                <div class="logo-icon"><i class="fa-brands fa-steam"></i></div>
+                <span class="logo-text">STIM</span>
+            </div>
+
+            <nav class="nav-links">
+                <a href="index.html" class="nav-item">LOJA</a>
+                <a href="library.html" class="nav-item">BIBLIOTECA</a>
+                <a href="community.html" class="nav-item">COMUNIDADE</a>
+                <a href="profile.html" class="nav-item">PERFIL</a>
+            </nav>
+
+            <div class="user-widget">
+                <div class="status-indicator online" id="status-badge" title="Servidor Stim Online">
+                    <span class="status-dot"></span>
+                    <span class="status-text">ONLINE</span>
+                </div>
+                <div class="cart-icon-wrapper" onclick="window.location.href='cart.html'">
+                    <i class="fa-solid fa-shopping-cart"></i>
+                    <span class="cart-badge" id="cart-count">0</span>
+                </div>
+                <div class="wishlist-icon-wrapper" onclick="window.location.href='wishlist.html'" title="Lista de Desejos">
+                    <i class="fa-solid fa-heart"></i>
+                </div>
+                <div class="wallet-balance" id="wallet-balance-widget" style="display: none;" onclick="window.location.href='profile.html'">
+                    <i class="fa-solid fa-wallet"></i>
+                    <span id="wallet-amount">R$ 0,00</span>
+                </div>
+                <div class="session-ui" id="session-ui-container">
+                    <button class="btn btn-login" onclick="window.location.href='login.html'">Iniciar Sessão</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN VIEWPORT CONTAINER -->
+    <main class="main-content" style="max-width: 1200px; margin: 25px auto; padding: 0 20px;">
+        
+        <!-- LOGIN PANEL -->
+        <div class="auth-container" id="login-panel">
+            <div class="auth-header">
+                <h3>INICIAR SESSÃO</h3>
+            </div>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email">E-MAIL</label>
+                    <input type="email" id="login-email" required placeholder="exemplo@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="login-password">SENHA</label>
+                    <input type="password" id="login-password" required placeholder="Digite sua senha">
+                </div>
+                <div id="login-error-msg" class="error-text" style="display: none;"></div>
+                <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+            </form>
+            <div class="modal-footer-hint">
+                Não tem uma conta? <a href="#" id="link-show-register">Criar conta gratuita</a>
+            </div>
+        </div>
+
+        <!-- REGISTER PANEL -->
+        <div class="auth-container" id="register-panel" style="display: none;">
+            <div class="auth-header">
+                <h3>CRIAR UMA CONTA</h3>
+            </div>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="register-name">NOME COMPLETO</label>
+                    <input type="text" id="register-name" required placeholder="Ex: Alice Silva">
+                </div>
+                <div class="form-group">
+                    <label for="register-email">ENDEREÇO DE E-MAIL</label>
+                    <input type="email" id="register-email" required placeholder="seuemail@exemplo.com">
+                </div>
+                <div class="form-group">
+                    <label for="register-password">SENHA</label>
+                    <input type="password" id="register-password" required placeholder="Escolha uma senha segura">
+                </div>
+                <div id="register-error-msg" class="error-text" style="display: none;"></div>
+                <button type="submit" class="btn btn-primary btn-block">Cadastrar</button>
+            </form>
+            <div class="modal-footer-hint">
+                Já tem uma conta? <a href="#" id="link-show-login">Iniciar sessão</a>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-divider"></div>
+            <div class="footer-info">
+                <div class="footer-logo"><i class="fa-brands fa-steam"></i> STIM</div>
+                <div class="footer-text">
+                    <p>© 2026 Stim Corporation. Todos os direitos reservados. Projeto acadêmico de Banco de Dados e Engenharia Web II.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/common.js"></script>
+    <script src="js/login.js"></script>
+</body>
+</html>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="no-referrer">
-    <title>Stim - Loja de Jogos</title>
+    <title>Stim - Meu Perfil</title>
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,10 +25,10 @@
             </div>
 
             <nav class="nav-links">
-                <a href="index.html" class="nav-item active">LOJA</a>
+                <a href="index.html" class="nav-item">LOJA</a>
                 <a href="library.html" class="nav-item">BIBLIOTECA</a>
                 <a href="community.html" class="nav-item">COMUNIDADE</a>
-                <a href="profile.html" class="nav-item">PERFIL</a>
+                <a href="profile.html" class="nav-item active" id="nav-profile">PERFIL</a>
             </nav>
 
             <div class="user-widget">
@@ -54,24 +54,11 @@
         </div>
     </header>
 
-    <!-- SUB-NAV / CATEGORIES BAR -->
-    <div class="sub-nav-bar" id="sub-nav-categories">
-        <div class="sub-nav-container">
-            <div class="categories-list" id="header-categories-list">
-                <span class="category-tag active" id="category-all-tag">Todos os Jogos</span>
-            </div>
-            <div class="search-box">
-                <input type="text" id="game-search-input" placeholder="Buscar no stim...">
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </div>
-        </div>
-    </div>
-
     <!-- MAIN VIEWPORT CONTAINER -->
-    <main class="main-content" id="store-content-area">
+    <main class="main-content" id="profile-content-area" style="max-width: 1200px; margin: 25px auto; padding: 0 20px;">
         <div class="loading-container">
             <div class="spinner"></div>
-            <p>Carregando catálogo do Stim...</p>
+            <p>Carregando perfil...</p>
         </div>
     </main>
 
@@ -88,8 +75,34 @@
         </div>
     </footer>
 
+    <!-- MODAL: WALLET DEPOSIT -->
+    <div class="modal-overlay" id="deposit-modal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>ADICIONAR FUNDOS À CARTEIRA</h3>
+                <button class="close-btn" id="btn-close-deposit-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-desc">Selecione uma quantia virtual para adicionar ao seu saldo no Stim:</p>
+                <div class="deposit-grid">
+                    <button class="btn btn-secondary btn-deposit-val" data-val="10">+ R$ 10,00</button>
+                    <button class="btn btn-secondary btn-deposit-val" data-val="25">+ R$ 25,00</button>
+                    <button class="btn btn-secondary btn-deposit-val" data-val="50">+ R$ 50,00</button>
+                    <button class="btn btn-secondary" id="btn-deposit-100" data-val="100">+ R$ 100,00</button>
+                </div>
+                <div class="deposit-custom">
+                    <label for="deposit-custom-amount">Outro Valor (R$)</label>
+                    <div class="input-inline">
+                        <input type="number" id="deposit-custom-amount" min="1" max="1000" placeholder="Ex: 15.00" step="0.01">
+                        <button class="btn btn-primary" id="btn-deposit-custom-submit">Adicionar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Scripts -->
     <script src="js/common.js"></script>
-    <script src="js/store.js"></script>
+    <script src="js/profile.js"></script>
 </body>
 </html>
