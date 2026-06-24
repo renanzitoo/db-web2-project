@@ -25,13 +25,6 @@ async function purchaseGame({ userId, gameId }) {
 
     await connection.query('UPDATE Usuarios SET saldo_carteira = ? WHERE id_usuario = ?', [newBalance, user.id_usuario]);
     await connection.query('INSERT INTO Biblioteca (id_usuario, id_jogo, data_aquisicao, horas_jogadas) VALUES (?, ?, CURDATE(), 0.00)', [user.id_usuario, game.id_jogo]);
-    await connection.query('INSERT INTO Atividades (id_usuario, id_jogo, tipo_atividade, descricao, visibilidade, data_hora) VALUES (?, ?, ?, ?, ?, NOW())', [
-      user.id_usuario,
-      game.id_jogo,
-      'comprou',
-      `${user.nome} comprou ${game.titulo}`,
-      'publica'
-    ]);
 
     await connection.commit();
     return { user: { ...user, saldo_carteira: newBalance }, game };

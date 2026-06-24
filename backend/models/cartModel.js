@@ -30,6 +30,9 @@ async function removeCartItem(userId, gameId) {
 module.exports = {
   getCartByUserId,
   hasCartItem,
+  hasInCart: hasCartItem,
   addCartItem,
-  removeCartItem
+  addToCart: addCartItem,
+  removeCartItem,
+  removeFromCart: removeCartItem
 };

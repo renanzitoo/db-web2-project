@@ -1,5 +1,5 @@
 // ==========================================================================
-// STIM - STORE MULTI-PAGE SCRIPT
+// AETHER - STORE MULTI-PAGE SCRIPT
 // ==========================================================================
 
 let allGamesList = [];
@@ -47,7 +47,7 @@ async function loadStoreFeed() {
     const container = document.getElementById('store-content-area');
     try {
         // Feed endpoint
-        const storedUser = localStorage.getItem('stim_user');
+        const storedUser = localStorage.getItem('aether_user');
         const userId = storedUser ? JSON.parse(storedUser).id_usuario : null;
         const feedUrl = userId ? `/games/feed/home?userId=${userId}` : '/games/feed/home';
         

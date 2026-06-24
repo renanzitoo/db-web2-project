@@ -300,3 +300,27 @@ CREATE TABLE Wishlist (
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
+
+-- =========================================
+-- TRIGGERS (GATILHOS)
+-- =========================================
+
+DELIMITER //
+
+CREATE TRIGGER trg_after_biblioteca_insert
+AFTER INSERT ON Biblioteca
+FOR EACH ROW
+BEGIN
+    DECLARE v_nome_usuario VARCHAR(100);
+    DECLARE v_titulo_jogo VARCHAR(150);
+
+    -- Obtém o nome do usuário e o título do jogo
+    SELECT nome INTO v_nome_usuario FROM Usuarios WHERE id_usuario = NEW.id_usuario;
+    SELECT titulo INTO v_titulo_jogo FROM Jogos WHERE id_jogo = NEW.id_jogo;
+
+    -- Insere o registro de atividade automaticamente
+    INSERT INTO Atividades (id_usuario, id_jogo, tipo_atividade, descricao, visibilidade, data_hora)
+    VALUES (NEW.id_usuario, NEW.id_jogo, 'comprou', CONCAT(v_nome_usuario, ' comprou ', v_titulo_jogo), 'publica', NEW.data_aquisicao);
+END//
+
+DELIMITER ;

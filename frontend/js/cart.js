@@ -1,5 +1,5 @@
 // ==========================================================================
-// STIM - CART MULTI-PAGE SCRIPT
+// AETHER - CART MULTI-PAGE SCRIPT
 // ==========================================================================
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -78,7 +78,7 @@ function renderCart(cartItems) {
                     <span>Subtotal</span>
                     <span>R$ ${subtotal.toFixed(2)}</span>
                 </div>
-                <p style="font-size:11px; color:var(--text-muted); margin-bottom:20px;">Você pagará usando o seu saldo da carteira virtual do Stim. A transação é imediata.</p>
+                <p style="font-size:11px; color:var(--text-muted); margin-bottom:20px;">Você pagará usando o seu saldo da carteira virtual do Aether. A transação é imediata.</p>
                 <button class="btn btn-success btn-block" id="btn-cart-checkout"><i class="fa-solid fa-circle-check"></i> Finalizar Compra</button>
             </div>
         </div>
@@ -102,7 +102,7 @@ async function checkoutCart() {
         try {
             const res = await apiFetch(`/cart/${currentUser.id_usuario}/checkout`, { method: 'POST' });
             currentUser.saldo_carteira = res.saldo_carteira;
-            localStorage.setItem('stim_user', JSON.stringify(currentUser));
+            localStorage.setItem('aether_user', JSON.stringify(currentUser));
             updateUserUI();
             syncCartCount();
             alert('Compra finalizada com sucesso! Todos os jogos foram adicionados à sua biblioteca.');

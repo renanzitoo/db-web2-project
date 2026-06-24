@@ -1,5 +1,5 @@
 // ==========================================================================
-// STIM - SHARED COMMON AJAX ENGINE & SESSION MANAGEMENT (MPA)
+// AETHER - SHARED COMMON AJAX ENGINE & SESSION MANAGEMENT (MPA)
 // ==========================================================================
 
 let currentUser = null;
@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     checkSession();
     checkServerStatus();
     setInterval(checkServerStatus, 30000); // Check status every 30 seconds
+    injectThemeSwitcher();
 });
 
 // ==========================================================================
@@ -75,7 +76,7 @@ async function checkServerStatus() {
 // SESSION MANAGEMENT
 // ==========================================================================
 function checkSession() {
-    const storedUser = localStorage.getItem('stim_user');
+    const storedUser = localStorage.getItem('aether_user');
     if (storedUser) {
         currentUser = JSON.parse(storedUser);
         updateUserUI();
@@ -100,7 +101,7 @@ async function refreshUserProfile() {
         currentUser.saldo_carteira = profile.saldo_carteira;
         currentUser.nome = profile.nome;
         currentUser.avatar_url = profile.avatar_url;
-        localStorage.setItem('stim_user', JSON.stringify(currentUser));
+        localStorage.setItem('aether_user', JSON.stringify(currentUser));
         updateUserUI();
     } catch (err) {
         console.error('Failed to refresh user profile:', err);
@@ -141,7 +142,7 @@ function updateUserUI() {
 
 function handleLogout() {
     currentUser = null;
-    localStorage.removeItem('stim_user');
+    localStorage.removeItem('aether_user');
     window.location.href = 'index.html';
 }
 
@@ -212,4 +213,76 @@ async function toggleWishlist(gameId, event) {
     } catch (err) {
         alert(err.message);
     }
+}
+
+// Floating Theme Switcher widget injection helper
+function injectThemeSwitcher() {
+    if (document.getElementById('theme-switcher-widget')) return;
+
+    // Create widget elements
+    const widget = document.createElement('div');
+    widget.id = 'theme-switcher-widget';
+    widget.style.position = 'fixed';
+    widget.style.bottom = '20px';
+    widget.style.right = '20px';
+    widget.style.zIndex = '9999';
+    widget.style.backgroundColor = 'var(--bg-panel)';
+    widget.style.border = '1px solid var(--border-color)';
+    widget.style.padding = '8px 14px';
+    widget.style.borderRadius = '30px';
+    widget.style.boxShadow = 'var(--box-shadow)';
+    widget.style.transition = 'var(--transition-smooth)';
+    widget.style.display = 'flex';
+    widget.style.alignItems = 'center';
+
+    const themes = [
+        { name: 'Nebula', className: '' },
+        { name: 'Vapor', className: 'theme-vapor' },
+        { name: 'Emerald Gold', className: 'theme-emerald' },
+        { name: 'Sunset', className: 'theme-sunset' }
+    ];
+
+    let currentThemeIdx = Number(localStorage.getItem('aether_theme_idx') || '0');
+    if (currentThemeIdx >= themes.length) currentThemeIdx = 0;
+
+    // Apply active theme class on load
+    themes.forEach(t => {
+        if (t.className) document.body.classList.remove(t.className);
+    });
+    if (themes[currentThemeIdx].className) {
+        document.body.classList.add(themes[currentThemeIdx].className);
+    }
+
+    const btn = document.createElement('button');
+    btn.innerHTML = `<i class="fa-solid fa-palette" style="color: var(--blue-primary); margin-right: 6px;"></i> Tema: <strong style="color: var(--text-white); font-weight: 700;">${themes[currentThemeIdx].name}</strong>`;
+    btn.style.backgroundColor = 'transparent';
+    btn.style.border = 'none';
+    btn.style.outline = 'none';
+    btn.style.cursor = 'pointer';
+    btn.style.fontSize = '12px';
+    btn.style.fontFamily = 'var(--font-family)';
+    btn.style.color = 'var(--text-main)';
+    btn.style.display = 'flex';
+    btn.style.alignItems = 'center';
+
+    btn.addEventListener('click', () => {
+        // Clear current theme class
+        if (themes[currentThemeIdx].className) {
+            document.body.classList.remove(themes[currentThemeIdx].className);
+        }
+
+        // Advance to next index
+        currentThemeIdx = (currentThemeIdx + 1) % themes.length;
+        localStorage.setItem('aether_theme_idx', currentThemeIdx.toString());
+
+        // Apply new theme class
+        if (themes[currentThemeIdx].className) {
+            document.body.classList.add(themes[currentThemeIdx].className);
+        }
+
+        btn.querySelector('strong').textContent = themes[currentThemeIdx].name;
+    });
+
+    widget.appendChild(btn);
+    document.body.appendChild(widget);
 }

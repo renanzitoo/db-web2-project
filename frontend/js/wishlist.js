@@ -1,5 +1,5 @@
 // ==========================================================================
-// STIM - WISHLIST MULTI-PAGE SCRIPT
+// AETHER - WISHLIST MULTI-PAGE SCRIPT
 // ==========================================================================
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -33,7 +33,7 @@ function renderWishlist(items) {
             <div class="wishlist-panel" style="max-width:800px; margin:40px auto; text-align:center; padding:50px;">
                 <i class="fa-solid fa-heart" style="font-size:64px; color:var(--border-color); margin-bottom:20px;"></i>
                 <h2>Sua lista de desejos está vazia</h2>
-                <p style="color:var(--text-muted); margin-bottom:25px;">Navegue pela loja do Stim e adicione jogos que você quer acompanhar aqui.</p>
+                <p style="color:var(--text-muted); margin-bottom:25px;">Navegue pela loja do Aether e adicione jogos que você quer acompanhar aqui.</p>
                 <button class="btn btn-primary" onclick="window.location.href='index.html'">Ir à Loja</button>
             </div>
         `;

@@ -1,5 +1,5 @@
 // ==========================================================================
-// STIM - COMMUNITY MULTI-PAGE SCRIPT
+// AETHER - COMMUNITY MULTI-PAGE SCRIPT
 // ==========================================================================
 
 document.addEventListener('DOMContentLoaded', () => {

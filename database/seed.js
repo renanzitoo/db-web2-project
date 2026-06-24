@@ -1970,6 +1970,7 @@ async function seed() {
 
   try {
     console.log('Cleaning up existing database tables...');
+    await db.query('DROP TRIGGER IF EXISTS trg_after_biblioteca_insert;');
     await db.query('SET FOREIGN_KEY_CHECKS = 0;');
     await db.query('TRUNCATE TABLE Usuario_Conquistas;');
     await db.query('TRUNCATE TABLE Conquistas;');
@@ -2115,6 +2116,23 @@ async function seed() {
       (1, 12, '2026-02-01 14:00:00'),
       (1, 13, '2026-03-01 09:00:00'),
       (3, 11, '2026-04-15 11:30:00')
+    `);
+
+    console.log('Creating trigger trg_after_biblioteca_insert...');
+    await db.query(`
+      CREATE TRIGGER trg_after_biblioteca_insert
+      AFTER INSERT ON Biblioteca
+      FOR EACH ROW
+      BEGIN
+          DECLARE v_nome_usuario VARCHAR(100);
+          DECLARE v_titulo_jogo VARCHAR(150);
+
+          SELECT nome INTO v_nome_usuario FROM Usuarios WHERE id_usuario = NEW.id_usuario;
+          SELECT titulo INTO v_titulo_jogo FROM Jogos WHERE id_jogo = NEW.id_jogo;
+
+          INSERT INTO Atividades (id_usuario, id_jogo, tipo_atividade, descricao, visibilidade, data_hora)
+          VALUES (NEW.id_usuario, NEW.id_jogo, 'comprou', CONCAT(v_nome_usuario, ' comprou ', v_titulo_jogo), 'publica', NEW.data_aquisicao);
+      END;
     `);
 
     console.log('Database seeded successfully with 50 games!');

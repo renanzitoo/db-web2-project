@@ -1,5 +1,5 @@
 // ==========================================================================
-// STIM - LOGIN & REGISTER MULTI-PAGE SCRIPT
+// AETHER - LOGIN & REGISTER MULTI-PAGE SCRIPT
 // ==========================================================================
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -59,7 +59,7 @@ async function handleLoginSubmit(e) {
             avatar_url: profile.avatar_url
         };
 
-        localStorage.setItem('stim_user', JSON.stringify(currentUser));
+        localStorage.setItem('aether_user', JSON.stringify(currentUser));
         updateUserUI();
         alert(`Boas-vindas de volta, ${currentUser.nome}!`);
         window.location.href = 'index.html';
@@ -92,7 +92,7 @@ async function handleRegisterSubmit(e) {
             avatar_url: `https://api.dicebear.com/7.x/pixel-art/svg?seed=${res.nome}`
         };
 
-        localStorage.setItem('stim_user', JSON.stringify(currentUser));
+        localStorage.setItem('aether_user', JSON.stringify(currentUser));
         updateUserUI();
         alert(`Conta criada com sucesso! Boas-vindas, ${currentUser.nome}!`);
         window.location.href = 'index.html';

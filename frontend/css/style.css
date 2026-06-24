@@ -2,34 +2,34 @@
    STIM BRAND DESIGN SYSTEM & PALETTE
    ========================================================================== */
 :root {
-    --bg-deep: #080d16;
-    --bg-dark: #171d25;
-    --bg-body: #1b2838;
-    --bg-panel: #162030;
-    --bg-panel-hover: #1f2e43;
-    --bg-nav: #171a21;
-    --bg-subnav: #1a2b3c;
-    --border-color: #2a3f5a;
+    --bg-deep: #05030a;
+    --bg-dark: #0f0b1a;
+    --bg-body: #160f29;
+    --bg-panel: #201335;
+    --bg-panel-hover: #311c52;
+    --bg-nav: #090611;
+    --bg-subnav: #1b1130;
+    --border-color: #492a82;
 
-    --blue-primary: #66c0f4;
-    --blue-dark: #1e3547;
-    --blue-hover: #8dd6ff;
-    --blue-gradient: linear-gradient(135deg, #2a475e 0%, #1b2838 100%);
+    --blue-primary: #00ffff;
+    --blue-dark: #072530;
+    --blue-hover: #80ffff;
+    --blue-gradient: linear-gradient(135deg, #201335 0%, #0f0b1a 100%);
     
-    --green-buy: #5c7e10;
-    --green-buy-hover: #7ba313;
-    --green-gradient: linear-gradient(to right, #75b022 0%, #588a1b 100%);
+    --green-buy: #ff007f;
+    --green-buy-hover: #ff3399;
+    --green-gradient: linear-gradient(to right, #ff007f 0%, #aa00ff 100%);
 
-    --accent-red: #cd5c5c;
+    --accent-red: #ff3366;
     --text-white: #ffffff;
-    --text-main: #c7d5e0;
-    --text-muted: #8f98a0;
-    --text-blue: #66c0f4;
+    --text-main: #e2d9f3;
+    --text-muted: #9f8fb9;
+    --text-blue: #00ffff;
 
     --font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     --border-radius: 4px;
-    --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }
 
 /* ==========================================================================
@@ -104,12 +104,12 @@ button {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #47bfff 0%, #1a83cc 100%);
+    background: linear-gradient(135deg, var(--blue-primary) 0%, var(--blue-dark) 100%);
     color: var(--text-white);
 }
 .btn-primary:hover {
-    background: linear-gradient(135deg, #66cdff 0%, #1e96e6 100%);
-    box-shadow: 0 0 10px rgba(102, 192, 244, 0.4);
+    background: linear-gradient(135deg, var(--blue-hover) 0%, var(--blue-primary) 100%);
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
 }
 
 .btn-success {
@@ -118,8 +118,8 @@ button {
     font-weight: 600;
 }
 .btn-success:hover {
-    background: linear-gradient(to right, #8ee32c 0%, #68a320 100%);
-    box-shadow: 0 0 10px rgba(123, 163, 19, 0.4);
+    background: linear-gradient(to right, #ff3399 0%, #bb33ff 100%);
+    box-shadow: 0 0 10px rgba(255, 0, 127, 0.4);
 }
 
 .btn-secondary {
@@ -190,7 +190,7 @@ button {
 .logo-icon {
     font-size: 28px;
     color: var(--text-white);
-    background: linear-gradient(135deg, var(--blue-primary) 0%, #1e3547 100%);
+    background: linear-gradient(135deg, var(--blue-primary) 0%, var(--green-buy) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
@@ -544,7 +544,7 @@ button {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background: linear-gradient(to right, #162030 0%, #0e141b 100%);
+    background: linear-gradient(to right, var(--bg-panel) 0%, var(--bg-deep) 100%);
 }
 
 .carousel-details h2 {
@@ -893,7 +893,7 @@ button {
 
 /* Buy & Wishlist Panel */
 .details-buy-panel {
-    background: linear-gradient(to right, #1f2e42 0%, #15202e 100%);
+    background: linear-gradient(to right, var(--bg-panel-hover) 0%, var(--bg-panel) 100%);
     border-radius: var(--border-radius);
     padding: 20px;
     box-shadow: var(--box-shadow);
@@ -1116,7 +1116,7 @@ button {
 .library-layout {
     display: grid;
     grid-template-columns: 280px 1fr;
-    background-color: #10161f;
+    background-color: var(--bg-deep);
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
     overflow: hidden;
@@ -1126,7 +1126,7 @@ button {
 
 /* Sidebar catalog */
 .library-sidebar {
-    background-color: #18202b;
+    background-color: var(--bg-dark);
     border-right: 1px solid var(--border-color);
     display: flex;
     flex-direction: column;
@@ -1217,7 +1217,7 @@ button {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(16, 22, 31, 0.95) 100%);
+    background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(22, 15, 41, 0.95) 100%);
     z-index: 1;
 }
 
@@ -1301,7 +1301,7 @@ button {
 
 .achievements-progress-fill {
     height: 100%;
-    background: linear-gradient(to right, var(--blue-primary), #1a83cc);
+    background: linear-gradient(to right, var(--blue-primary), var(--green-buy));
     width: 0%;
     transition: width 0.5s ease;
 }
@@ -1490,7 +1490,7 @@ button {
    PROFILE VIEW
    ========================================================================== */
 .profile-card {
-    background: linear-gradient(to bottom, #233447 0%, #16202d 100%);
+    background: linear-gradient(to bottom, var(--bg-panel-hover) 0%, var(--bg-panel) 100%);
     border-radius: var(--border-radius);
     padding: 30px;
     box-shadow: var(--box-shadow);
@@ -1955,5 +1955,143 @@ button {
     }
     .search-box {
         width: 100%;
+    }
+}
+
+/* ==========================================================================
+   THEMES & COLOR PALETTES
+   ========================================================================== */
+
+/* 1. Vapor Theme (Cinza Carbono, Laranja Vulcânico, Brancos) */
+body.theme-vapor {
+    --bg-deep: #121214;
+    --bg-dark: #1a1a1e;
+    --bg-body: #222227;
+    --bg-panel: #2d2d34;
+    --bg-panel-hover: #3e3e46;
+    --bg-nav: #0f0f11;
+    --bg-subnav: #1c1c21;
+    --border-color: #4a4a55;
+
+    --blue-primary: #ff4500;
+    --blue-dark: #3b1406;
+    --blue-hover: #ff7f50;
+    --blue-gradient: linear-gradient(135deg, #2d2d34 0%, #121214 100%);
+    
+    --green-buy: #e03c00;
+    --green-buy-hover: #ff5714;
+    --green-gradient: linear-gradient(to right, #ff4500 0%, #ff8c00 100%);
+
+    --accent-red: #ff3333;
+    --text-white: #ffffff;
+    --text-main: #f0f0f5;
+    --text-muted: #a0a0b0;
+    --text-blue: #ff4500;
+}
+
+/* 2. Emerald Gold Theme (Verde Esmeralda Profundo, Ouro Escovado, Preto) */
+body.theme-emerald {
+    --bg-deep: #050b07;
+    --bg-dark: #0b160f;
+    --bg-body: #112216;
+    --bg-panel: #1a3321;
+    --bg-panel-hover: #264d32;
+    --bg-nav: #030805;
+    --bg-subnav: #132719;
+    --border-color: #c5a880;
+
+    --blue-primary: #d4af37;
+    --blue-dark: #3a2e10;
+    --blue-hover: #f3e5ab;
+    --blue-gradient: linear-gradient(135deg, #1a3321 0%, #050b07 100%);
+    
+    --green-buy: #1b4d3e;
+    --green-buy-hover: #2d8a6b;
+    --green-gradient: linear-gradient(to right, #d4af37 0%, #1b4d3e 100%);
+
+    --accent-red: #b22222;
+    --text-white: #ffffff;
+    --text-main: #e2ede5;
+    --text-muted: #9bbca4;
+    --text-blue: #d4af37;
+}
+
+/* 3. Sunset Theme (Azul Royal Profundo, Coral Quente, Gradientes Suaves) */
+body.theme-sunset {
+    --bg-deep: #0b132b;
+    --bg-dark: #1c2541;
+    --bg-body: #222b45;
+    --bg-panel: #2e3b5e;
+    --bg-panel-hover: #3f51b5;
+    --bg-nav: #0a0e1a;
+    --bg-subnav: #1f283f;
+    --border-color: #5c6bc0;
+
+    --blue-primary: #ff7a59;
+    --blue-dark: #3a1a18;
+    --blue-hover: #ff9e80;
+    --blue-gradient: linear-gradient(135deg, #2e3b5e 0%, #0b132b 100%);
+    
+    --green-buy: #3f51b5;
+    --green-buy-hover: #5c6bc0;
+    --green-gradient: linear-gradient(to right, #ff7a59 0%, #ff3d00 100%);
+
+    --accent-red: #d50000;
+    --text-white: #ffffff;
+    --text-main: #e8eaf6;
+    --text-muted: #9fa8da;
+    --text-blue: #ff7a59;
+}
+
+/* ==========================================================================
+   FOOTER STYLING
+   ========================================================================== */
+.main-footer {
+    background-color: var(--bg-nav);
+    padding: 20px 0;
+    margin-top: 60px;
+    border-top: 1px solid var(--border-color);
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-divider {
+    display: none;
+}
+
+.footer-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-white);
+    background: linear-gradient(135deg, var(--blue-primary) 0%, var(--green-buy) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.footer-text p {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .footer-info {
+        flex-direction: column;
+        text-align: center;
     }
 }

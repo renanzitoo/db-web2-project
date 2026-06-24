@@ -1,0 +1,474 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazilian]{babel}
+\usepackage{geometry}
+\geometry{top=3cm, bottom=2cm, left=3cm, right=2cm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Relatório de Projeto Interdisciplinar - Aether},
+    pdfpagemode=FullScreen,
+}
+
+% Definições de cores para destaque de código
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.96,0.96,0.96}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue}\bfseries,
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\lstset{style=mystyle}
+
+\begin{document}
+
+% --- CAPA ABNT ---
+\begin{titlepage}
+    \begin{center}
+        \large\textbf{INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO SUL DE MINAS -- IFSULDEMINAS}\\
+        \large\textbf{CAMPUS POÇOS DE CALDAS}\\
+        \large\textbf{ENGENHARIA DE COMPUTAÇÃO}\\
+        \vfill
+        \large\textbf{Gustavo Augusto Marques}\\
+        \large\textbf{Letícia Maria Batista Carneiro}\\
+        \large\textbf{Renan Cristiano Costa}\\
+        \vfill
+        \LARGE\textbf{PROJETO INTERDISCIPLINAR}\\
+        \Large\textbf{Banco de Dados 2 \& Programação Web 2}\\
+        \Large\textit{Plataforma Aether -- Catálogo e Gerenciamento de Jogos Digitais}\\
+        \vfill
+        \large\textbf{Poços de Caldas -- MG}\\
+        \large\textbf{1º Semestre / 2026}
+    \end{center}
+\end{titlepage}
+
+% --- FOLHA DE ROSTO ---
+\begin{titlepage}
+    \begin{center}
+        \large\textbf{Gustavo Augusto Marques}\\
+        \large\textbf{Letícia Maria Batista Carneiro}\\
+        \large\textbf{Renan Cristiano Costa}\\
+        \vfill
+        \LARGE\textbf{PROJETO INTERDISCIPLINAR}\\
+        \Large\textbf{Banco de Dados 2 \& Programação Web 2}\\
+        \Large\textit{Plataforma Aether -- Catálogo e Gerenciamento de Jogos Digitais}\\
+        \vfill
+        \hspace{.45\textwidth}
+        \begin{minipage}{.5\textwidth}
+            \small Relatório técnico e descritivo apresentado como requisito parcial para aprovação nas disciplinas de Banco de Dados 2 e Programação Web 2 do curso de Engenharia de Computação do IFSULDEMINAS -- Campus Poços de Caldas.
+            \newline\newline
+            \textbf{Professores orientadores:} \\
+            Prof. Ricardo Ramos de Oliveira \\
+            Prof. Marcos Celso Rodrigues
+        \end{minipage}
+        \vfill
+        \large\textbf{Poços de Caldas -- MG}\\
+        \large\textbf{1º Semestre / 2026}
+    \end{center}
+\end{titlepage}
+
+\newpage
+\tableofcontents
+\newpage
+
+% --- 1. VISÃO GERAL ---
+\section{Visão Geral do Projeto}
+O presente projeto consiste no desenvolvimento do \textbf{Aether}, uma plataforma web de catálogo, compra e simulação de tempo de jogo de jogos digitais, fortemente inspirada em plataformas consolidadas do mercado como a Steam. 
+
+O objetivo central deste trabalho é demonstrar a integração entre a modelagem de banco de dados relacional e o desenvolvimento de sistemas web completos. O sistema desenvolvido consome e persiste dados em tempo real em um SGBD através de uma arquitetura baseada em serviços e transações atômicas, eliminando mocks e dados estáticos.
+
+% --- 2. PARTE I: BANCO DE DADOS ---
+\section{Parte I — Banco de Dados}
+
+\subsection{Descrição do Modelo}
+O sistema representa uma loja virtual de jogos que gerencia a jornada do usuário e a interação social. As principais regras e fluxos de dados mapeados incluem:
+
+\begin{itemize}
+    \item \textbf{Usuários (\texttt{Usuarios}):} Possuem dados cadastrais, e-mail único, hash de senha para autenticação, avatar personalizado e uma carteira (\texttt{saldo\_carteira}) que pode ser carregada com créditos.
+    \item \textbf{Catálogo de Jogos e Mídias (\texttt{Jogos}, \texttt{Categorias}, \texttt{Screenshots\_Jogos}, \texttt{Videos\_Jogos}):} Os jogos são classificados por categoria (gênero) e contêm links para capturas de tela e vídeos de demonstração usados na interface de visualização.
+    \item \textbf{Biblioteca e Gameplay (\texttt{Biblioteca}):} Vincula os usuários aos jogos adquiridos, armazenando a data de aquisição e o histórico cumulativo de horas jogadas. A aquisição de um jogo impede novas compras do mesmo título.
+    \item \textbf{Sistema de Conquistas (\texttt{Conquistas}, \texttt{Usuario\_Conquistas}):} Jogos possuem conquistas com pontuações variadas que podem ser obtidas aleatoriamente pelos usuários ao simularem tempo de gameplay.
+    \item \textbf{Ciclo de Compra e Intenção (\texttt{Carrinho}, \texttt{Wishlist}):} Permite que usuários adicionem jogos temporariamente no carrinho de compras ou salvem na lista de desejos para acompanhamento futuro.
+    \item \textbf{Interações Sociais e Avaliação (\texttt{Amigos}, \texttt{Avaliacoes}, \texttt{Atividades}):} Usuários podem criar laços de amizade bidirecionais (pendentes, aceitos ou bloqueados), avaliar jogos com notas de 1 a 10 e recomendações, além de visualizar um feed dinâmico de atividades (compras, conquistas e gameplay).
+\end{itemize}
+
+\subsection{Modelo Entidade-Relacionamento (MER)}
+O diagrama conceitual do banco de dados encontra-se representado na imagem \texttt{diagrama.jpg} anexada na raiz do projeto. O modelo apresenta os relacionamentos e cardinalidades (1:1, 1:N e N:N) adequados para o negócio.
+
+Abaixo, a representação estrutural lógica das entidades e relacionamentos é detalhada:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{diagrama.jpg}
+    \caption{Diagrama Entidade-Relacionamento do Banco de Dados Aether.}
+    \label{fig:mer}
+\end{figure}
+
+\subsection{Modelo Relacional}
+Abaixo apresenta-se o mapeamento lógico do banco de dados contendo Chaves Primárias \textbf{[PK]} e Chaves Estrangeiras \textbf{[FK]}, seguido de tuplas reais de exemplo do banco. As definições e dados estão dentro de blocos de código com quebra automática habilitada para evitar qualquer estouro de margem na página física:
+
+\begin{lstlisting}[language=SQL]
+-- 1. Usuarios
+Usuarios(id_usuario [PK], nome, email, senha, avatar_url, saldo_carteira, data_cadastro)
+Exemplos:
+(1, 'Alice', 'alice@example.com', 'senha', 'avatar_alice.png', 500.00, '2026-01-01 10:00:00')
+(2, 'Bob', 'bob@example.com', 'senha', 'avatar_bob.png', 250.50, '2026-02-15 14:30:00')
+(3, 'Charlie', 'charlie@example.com', 'senha', 'avatar_charlie.png', 20.00, '2026-03-20 18:45:00')
+
+-- 2. Categorias
+Categorias(id_categoria [PK], nome_categoria, descricao)
+Exemplos:
+(1, 'Acao', 'Jogos de combate rapido, tiro e adrenalina.')
+(2, 'RPG', 'Role-playing games com historias profundas.')
+(3, 'Corrida', 'Simuladores de corrida e direcao em alta velocidade.')
+
+-- 3. Jogos
+Jogos(id_jogo [PK], titulo, descricao, preco, data_lancamento, desenvolvedor, distribuidora, capa_url, banner_url, id_categoria [FK -> Categorias])
+Exemplos:
+(1, 'Counter-Strike 2', 'Tiro tatico...', 0.00, '2023-09-27', 'Valve', 'Valve', 'capa_cs.jpg', 'banner_cs.jpg', 1)
+(2, 'Cyberpunk 2077', 'RPG futurista...', 199.90, '2020-12-10', 'CDPR', 'CDPR', 'capa_cp.jpg', 'banner_cp.jpg', 2)
+(3, 'Forza Horizon 5', 'Corrida...', 249.00, '2021-11-09', 'Playground', 'Xbox', 'capa_fz.jpg', 'banner_fz.jpg', 3)
+
+-- 4. Biblioteca
+Biblioteca(id_usuario [PK][FK -> Usuarios], id_jogo [PK][FK -> Jogos], data_aquisicao, horas_jogadas)
+Exemplos:
+(1, 1, '2026-01-05 18:20:00', 124.50)
+(1, 2, '2026-03-10 12:00:00', 45.20)
+(2, 1, '2026-02-16 19:00:00', 12.00)
+
+-- 5. Conquistas
+Conquistas(id_conquista [PK], id_jogo [FK -> Jogos], nome_conquista, descricao, pontos, icone_url, data_criacao)
+Exemplos:
+(1, 1, 'Primeiro Sangue', 'Consiga a primeira eliminacao.', 10, 'icon1.png', '2026-01-05')
+(2, 1, 'Mestre das Armas', 'Venca corrida de armas.', 15, 'icon2.png', '2026-01-05')
+(3, 2, 'Caminho do Samurai', 'Conclua a historia principal.', 40, 'icon3.png', '2026-01-05')
+
+-- 6. Usuario_Conquistas
+Usuario_Conquistas(id_usuario [PK][FK -> Usuarios], id_conquista [PK][FK -> Conquistas], data_desbloqueio)
+Exemplos:
+(1, 1, '2026-01-05 20:15:00')
+(1, 2, '2026-01-10 15:40:00')
+(2, 1, '2026-02-17 11:20:00')
+
+-- 7. Amigos
+Amigos(id_amizade [PK], id_usuario [FK -> Usuarios], id_amigo [FK -> Usuarios], status_amizade, data_solicitacao, data_aceite)
+Exemplos:
+(1, 1, 2, 'aceita', '2026-01-10 12:00:00', '2026-01-10 12:30:00')
+(2, 1, 3, 'pendente', '2026-06-20 15:00:00', NULL)
+(3, 2, 3, 'aceita', '2026-03-01 10:00:00', '2026-03-02 11:00:00')
+
+-- 8. Atividades
+Atividades(id_atividade [PK], id_usuario [FK -> Usuarios], id_jogo [FK -> Jogos], tipo_atividade, descricao, visibilidade, data_hora)
+Exemplos:
+(1, 1, 1, 'comprou', 'Alice comprou CS2', 'publica', '2026-01-05')
+(2, 1, 1, 'conquista', 'Alice desbloqueou Primeiro Sangue', 'publica', '2026-01-05')
+(3, 2, 1, 'jogou', 'Bob jogou CS2 por 3.0 horas.', 'amigos', '2026-02-18')
+
+-- 9. Avaliacoes
+Avaliacoes(id_avaliacao [PK], id_usuario [FK -> Usuarios], id_jogo [FK -> Jogos], nota, comentario, recomendaria, data_avaliacao)
+Exemplos:
+(1, 1, 2, 10, 'Jogo fenomenal! Exploracao incrivel.', 1, '2026-03-20')
+(2, 2, 1, 9, 'Tiro tatico muito bom.', 1, '2026-04-10')
+(3, 1, 1, 8, 'Excelente jogabilidade classica.', 1, '2026-01-10')
+
+-- 10. Carrinho
+Carrinho(id_usuario [PK][FK -> Usuarios], id_jogo [PK][FK -> Jogos], data_adicao)
+Exemplos:
+(1, 3, '2026-06-24 12:00:00')
+(2, 2, '2026-06-24 13:00:00')
+(3, 1, '2026-06-24 14:00:00')
+
+-- 11. Wishlist
+Wishlist(id_usuario [PK][FK -> Usuarios], id_jogo [PK][FK -> Jogos], data_adicao)
+Exemplos:
+(1, 3, '2026-02-01 14:00:00')
+(2, 2, '2026-03-01 09:00:00')
+(3, 2, '2026-04-15 11:30:00')
+
+-- 12. Screenshots_Jogos
+Screenshots_Jogos(id_screenshot [PK], id_jogo [FK -> Jogos], imagem_url, ordem)
+Exemplos:
+(1, 1, 'ss_cs1.jpg', 1)
+(2, 1, 'ss_cs2.jpg', 2)
+(3, 2, 'ss_cp1.jpg', 1)
+
+-- 13. Videos_Jogos
+Videos_Jogos(id_video [PK], id_jogo [FK -> Jogos], video_url)
+Exemplos:
+(1, 1, 'trailer_cs.mp4')
+(2, 2, 'trailer_cp.mp4')
+(3, 3, 'trailer_fz.mp4')
+\end{lstlisting}
+
+\subsection{Normalização}
+O banco de dados foi projetado desde sua concepção na \textbf{3ª Forma Normal (3FN)}, garantindo consistência operacional.
+
+\begin{itemize}
+    \item \textbf{1ª Forma Normal (1FN):} Todos os atributos armazenam apenas valores atômicos e indivisíveis. Não existem colunas multivaloradas ou grupos repetitivos. O armazenamento de URLs de capturas de tela múltipla foi devidamente separado na tabela subordinada \texttt{Screenshots\_Jogos}.
+    \item \textbf{2ª Forma Normal (2FN):} Estando na 1FN, todas as chaves primárias simples definem unicamente os atributos não-chave. Nas tabelas com chaves primárias compostas (\texttt{Biblioteca}, \texttt{Usuario\_Conquistas}, \texttt{Carrinho} e \texttt{Wishlist}), os atributos não-chave dependem da totalidade da chave composta, inexistindo dependência funcional parcial.
+    \item \textbf{3ª Forma Normal (3FN):} Estando na 2FN, nenhuma coluna não-chave depende de forma transitiva de outra coluna não-chave. Por exemplo, informações de categorização dos jogos não estão em \texttt{Jogos}, mas sim na tabela própria \texttt{Categorias}, sendo associadas de forma limpa pelo identificador da chave estrangeira \texttt{id\_categoria}.
+\end{itemize}
+
+\subsection{Dependências Funcionais}
+As relações de determinação funcional mapeadas de acordo com a notação formal $A \rightarrow B$. A utilização de blocos de texto formatados em Courier com quebra automática garante o alinhamento adequado de atributos extensos dentro dos limites das margens da página:
+
+\begin{lstlisting}
+Usuarios:
+  id_usuario -> {nome, email, senha, avatar_url, saldo_carteira, data_cadastro}
+  email -> {id_usuario}
+
+Categorias:
+  id_categoria -> {nome_categoria, descricao}
+
+Jogos:
+  id_jogo -> {titulo, descricao, preco, data_lancamento, desenvolvedor, distribuidora, capa_url, banner_url, id_categoria}
+
+Biblioteca:
+  {id_usuario, id_jogo} -> {data_aquisicao, horas_jogadas}
+
+Conquistas:
+  id_conquista -> {id_jogo, nome_conquista, descricao, pontos, icone_url, data_criacao}
+
+Usuario_Conquistas:
+  {id_usuario, id_conquista} -> {data_desbloqueio}
+
+Amigos:
+  id_amizade -> {id_usuario, id_amigo, status_amizade, data_solicitacao, data_aceite}
+
+Atividades:
+  id_atividade -> {id_usuario, id_jogo, tipo_atividade, descricao, visibilidade, data_hora}
+
+Avaliacoes:
+  id_avaliacao -> {id_usuario, id_jogo, nota, comentario, recomendaria, data_avaliacao}
+
+Carrinho:
+  {id_usuario, id_jogo} -> {data_adicao}
+
+Wishlist:
+  {id_usuario, id_jogo} -> {data_adicao}
+
+Screenshots_Jogos:
+  id_screenshot -> {id_jogo, imagem_url, ordem}
+
+Videos_Jogos:
+  id_video -> {id_jogo, video_url}
+\end{lstlisting}
+
+% --- 3. PARTE II: IMPLEMENTAÇÃO SQL ---
+\section{Parte II — Implementação SQL}
+
+\subsection{Criação das Tabelas (DDL)}
+A definição física do banco de dados (DDL) está implementada no arquivo \texttt{create-database.sql}. As tabelas são criadas definindo explicitamente tipos numéricos otimizados, precisão decimal para valores monetários, enumerações controladas para status relacionais, regras estruturais \texttt{NOT NULL} e \texttt{UNIQUE}, além de comandos \texttt{DROP TABLE IF EXISTS} ordenados reversamente para fins de reinstalação limpa.
+
+\subsection{Inserção de Dados (DML)}
+A inserção de dados de demonstração coerentes é gerenciada programaticamente pelo script \texttt{seed.js}. Ele popula 50 jogos autênticos consultados da base de dados da Steam (incluindo capas, banners e mídias), além de relacionamentos de teste.
+
+\subsection{Consultas SQL}
+Abaixo estão descritas e comentadas as 4 consultas SQL implementadas no sistema.
+
+\subsubsection{Consulta 1: Relatório de Jogos em Destaque (Cruzamento de 3 Tabelas e Agregação)}
+\begin{itemize}
+    \item \textbf{Objetivo:} Listar os jogos mais populares com base na avaliação média, exibindo a categoria do jogo e a quantidade de reviews.
+    \item \textbf{Código SQL:}
+\end{itemize}
+\begin{lstlisting}[language=SQL]
+SELECT 
+    j.id_jogo, 
+    j.titulo, 
+    j.preco, 
+    c.nome_categoria,
+    COALESCE(r.nota_media, 0) AS nota_media,
+    COALESCE(r.total_avaliacoes, 0) AS total_avaliacoes
+FROM Jogos j
+INNER JOIN Categorias c ON c.id_categoria = j.id_categoria
+LEFT JOIN (
+    SELECT 
+        id_jogo, 
+        ROUND(AVG(nota), 1) AS nota_media, 
+        COUNT(*) AS total_avaliacoes
+    FROM Avaliacoes
+    GROUP BY id_jogo
+) r ON r.id_jogo = j.id_jogo
+ORDER BY nota_media DESC, total_avaliacoes DESC
+LIMIT 4;
+\end{lstlisting}
+\begin{itemize}
+    \item \textbf{Resultado Esperado:} Retorna títulos de jogos com suas categorias e a agregação de média aritmética das notas dadas pelos usuários.
+\end{itemize}
+
+\subsubsection{Consulta 2: Biblioteca de Usuário com Detalhes de Progresso (JOIN)}
+\begin{itemize}
+    \item \textbf{Objetivo:} Listar todos os jogos adquiridos por um usuário específico, mostrando o tempo de jogo e a data de aquisição.
+    \item \textbf{Código SQL:}
+\end{itemize}
+\begin{lstlisting}[language=SQL]
+SELECT 
+    j.id_jogo, 
+    j.titulo, 
+    b.data_aquisicao, 
+    b.horas_jogadas
+FROM Biblioteca b
+INNER JOIN Jogos j ON j.id_jogo = b.id_jogo
+WHERE b.id_usuario = 1
+ORDER BY b.data_aquisicao DESC;
+\end{lstlisting}
+\begin{itemize}
+    \item \textbf{Resultado Esperado:} Histórico ordenado cronologicamente de jogos na conta de um usuário.
+\end{itemize}
+
+\subsubsection{Consulta 3: Perfil Consolidado de Estatísticas}
+\begin{itemize}
+    \item \textbf{Objetivo:} Consolidar as principais estatísticas públicas do perfil do usuário em uma única linha via subconsultas correlacionadas.
+    \item \textbf{Código SQL:}
+\end{itemize}
+\begin{lstlisting}[language=SQL]
+SELECT 
+    u.id_usuario, 
+    u.nome, 
+    u.saldo_carteira,
+    (SELECT COUNT(*) FROM Biblioteca b WHERE b.id_usuario = u.id_usuario) AS total_jogos,
+    (SELECT COALESCE(SUM(b.horas_jogadas), 0) FROM Biblioteca b WHERE b.id_usuario = u.id_usuario) AS total_horas_jogadas,
+    (SELECT COUNT(*) FROM Usuario_Conquistas uc WHERE uc.id_usuario = u.id_usuario) AS total_conquistas,
+    (SELECT COUNT(*) FROM Amigos a WHERE (a.id_usuario = u.id_usuario OR a.id_amigo = u.id_usuario) AND a.status_amizade = 'aceita') AS total_amigos,
+    (SELECT COUNT(*) FROM Avaliacoes av WHERE av.id_usuario = u.id_usuario) AS total_avaliacoes
+FROM Usuarios u
+WHERE u.id_usuario = 1;
+\end{lstlisting}
+\begin{itemize}
+    \item \textbf{Resultado Esperado:} Retorna uma única linha com dados cadastrais e as métricas calculadas em tempo real.
+\end{itemize}
+
+\subsubsection{Consulta 4: Jogos no Carrinho de Compras (JOIN)}
+\begin{itemize}
+    \item \textbf{Objetivo:} Listar os jogos que estão no carrinho de compras de um usuário e que serão processados no fechamento.
+    \item \textbf{Código SQL:}
+\end{itemize}
+\begin{lstlisting}[language=SQL]
+SELECT 
+    j.id_jogo, 
+    j.titulo, 
+    j.preco, 
+    c.data_adicao
+FROM Carrinho c
+INNER JOIN Jogos j ON j.id_jogo = c.id_jogo
+WHERE c.id_usuario = 1;
+\end{lstlisting}
+\begin{itemize}
+    \item \textbf{Resultado Esperado:} Relação de jogos pendentes de checkout no perfil selecionado.
+\end{itemize}
+
+\subsection{Objeto de Banco de Dados (TRIGGER)}
+Optou-se pelo desenvolvimento de um gatilho de banco de dados (\textbf{Trigger}) para encapsular a lógica de inserção na linha do tempo social do usuário.
+
+\begin{itemize}
+    \item \textbf{Justificativa da Escolha:} Toda vez que um usuário adquire um jogo (linha adicionada na tabela \texttt{Biblioteca}), é essencial publicar um registro informativo em seu feed de atividades (\texttt{Atividades}). Automatizar isso diretamente no MySQL via Trigger assegura consistência absoluta e atomicidade. A aplicação backend deixa de se preocupar com esta gravação, reduzindo acoplamento e evitando redundância de código de gravação em múltiplos fluxos de compra (compra direta ou checkout de carrinho).
+    \item \textbf{Código SQL do Objeto:}
+\end{itemize}
+\begin{lstlisting}[language=SQL]
+CREATE TRIGGER trg_after_biblioteca_insert
+AFTER INSERT ON Biblioteca
+FOR EACH ROW
+BEGIN
+    DECLARE v_nome_usuario VARCHAR(100);
+    DECLARE v_titulo_jogo VARCHAR(150);
+
+    -- Busca dados textuais necessarios
+    SELECT nome INTO v_nome_usuario FROM Usuarios WHERE id_usuario = NEW.id_usuario;
+    SELECT titulo INTO v_titulo_jogo FROM Jogos WHERE id_jogo = NEW.id_jogo;
+
+    -- Cria atividade correspondente
+    INSERT INTO Atividades (id_usuario, id_jogo, tipo_atividade, descricao, visibilidade, data_hora)
+    VALUES (NEW.id_usuario, NEW.id_jogo, 'comprou', CONCAT(v_nome_usuario, ' comprou ', v_titulo_jogo), 'publica', NEW.data_aquisicao);
+END;
+\end{lstlisting}
+\begin{itemize}
+    \item \textbf{Exemplo de Execução:}
+    Ao executar o comando de inserção:
+\end{itemize}
+\begin{lstlisting}[language=SQL]
+INSERT INTO Biblioteca (id_usuario, id_jogo, data_aquisicao, horas_jogadas) 
+VALUES (1, 40, NOW(), 0.00);
+\end{lstlisting}
+\begin{itemize}
+    \item[] O banco executa automaticamente o gatilho. Para comprovar, consulta-se a tabela de atividades:
+\end{itemize}
+\begin{lstlisting}[language=SQL]
+SELECT * FROM Atividades 
+WHERE id_usuario = 1 AND id_jogo = 40;
+\end{lstlisting}
+
+% --- 4. PARTE III: SISTEMA WEB ---
+\section{Parte III — Sistema Web (Programação Web 2)}
+
+\subsection{Requisitos do Sistema}
+O sistema web conecta-se ao banco de dados MySQL de forma persistente através de um pool gerenciado. As seguintes funcionalidades principais do CRUD e integração foram consolidadas:
+
+\begin{itemize}
+    \item \textbf{Conexão Dinâmica Real:} Dados do catálogo (jogos, capas, preços e mídias), avaliações de usuários e perfil financeiro são obtidos diretamente das tabelas físicas MySQL.
+    \item \textbf{Interface de Listagem e Detalhes:} A tela inicial carrega dinamicamente as categorias e os jogos, separando em sessões de destaques, promoções e recomendações customizadas.
+    \item \textbf{Persistência e Operações CRUD:}
+    \begin{itemize}
+        \item \textbf{Cadastro e Edição:} Inserção de novos usuários com verificação de chaves únicas (\texttt{email}) e adição de créditos financeiros à carteira.
+        \item \textbf{Carrinho e Lista de Desejos:} Adição e remoção de jogos associados à conta com validação de regras de duplicidade.
+        \item \textbf{Simulação de Gameplay (Update):} Funcionalidade que dispara um incremento randômico de horas jogadas na tabela de biblioteca e possui 40\% de chance de desbloquear conquistas no perfil.
+    \end{itemize}
+    \item \textbf{Integração de Consultas:} As queries de visualização (reviews agregadas por média aritmética, feeds de conquistas e atividades disparadas por Trigger) são executadas no banco e entregues via REST API.
+    \item \textbf{Tratamento de Erros:} Bloco de controle com \texttt{try/catch} e transações financeiras protegidas por \texttt{ROLLBACK} automático caso ocorram falhas de conexão ou violação de constraints SQL.
+\end{itemize}
+
+\subsection{Arquitetura e Tecnologias}
+A arquitetura do projeto adota uma abordagem de isolamento em camadas para separação limpa de responsabilidades e consumo assíncrono:
+
+\subsubsection{Arquitetura do Frontend}
+O desenvolvimento da camada de apresentação (Frontend) focou na entrega de uma experiência dinâmica de usuário (Single Page Feeling) de alta performance. As características arquiteturais principais incluem:
+\begin{itemize}
+    \item \textbf{Renderização Baseada em AJAX:} Utilização do Javascript assíncrono por meio da \textbf{Fetch API} para realizar requisições não-bloqueantes aos endpoints da API REST do backend. Os dados retornados no formato JSON são processados pelo script cliente para atualizar e modificar dinamicamente a Árvore de Elementos (DOM) sem forçar o recarregamento total da página HTML.
+    \item \textbf{Páginas HTML Estáticas com CSS Bootstrap:} Estruturas construídas em HTML5 responsivo e estilizadas com o framework CSS \textbf{Bootstrap 5}, garantindo que a aplicação se adapte perfeitamente a diferentes tamanhos de tela (computadores, tablets e smartphones).
+    \item \textbf{Componentização de UI e Gerência de Estado Local:} Componentes reutilizáveis como cabeçalhos, rodapés e cards de exibição de jogos são injetados programaticamente na tela. O estado temporário da sessão (como o identificador do usuário ativo) é persistido localmente no navegador do usuário utilizando o recurso do \textbf{localStorage}.
+\end{itemize}
+
+\subsubsection{Arquitetura do Backend}
+O backend do sistema Aether segue o padrão clássico de \textbf{Separação de Responsabilidades em Camadas (Layered Architecture)}, o que facilita a manutenção e a escalabilidade da aplicação. As camadas principais do servidor são descritas a seguir:
+\begin{itemize}
+    \item \textbf{Camada de Rotas (Routes):} Responsável por expor as portas de comunicação da aplicação através dos endpoints HTTP. Ela mapeia os caminhos URL e direciona as requisições para a lógica correspondente.
+    \item \textbf{Camada de Controladores (Controllers):} Intercepta os dados recebidos na requisição HTTP (\texttt{req.body}, \texttt{req.params}, \texttt{req.query}), valida parâmetros básicos de envio e repassa as chamadas à camada de serviços. Após o processamento, formula as respostas estruturadas no formato JSON acompanhadas de cabeçalhos e códigos de status HTTP corretos (ex: \texttt{200 OK}, \texttt{400 Bad Request}, \texttt{500 Internal Error}).
+    \item \textbf{Camada de Serviços (Services - Regras de Negócio):} Onde reside toda a lógica operacional da aplicação Aether. Essa camada é responsável por coordenar validações complexas (ex: verificar se o saldo é maior que o preço total na compra direta ou no carrinho) e garantir a atomicidade das transações do banco de dados (gerenciando comandos de início de transação, confirmação de escrita -- \texttt{COMMIT} -- e reversão em caso de exceções -- \texttt{ROLLBACK}).
+    \item \textbf{Camada de Modelagem (Models - Data Access Object):} Abstrai as operações de persistência de dados. Os modelos realizam a comunicação de baixo nível com o MySQL. Em vez de abrir e fechar conexões para cada operação individual, essa camada implementa o conceito de \textbf{Connection Pool} (através do driver nativo \texttt{mysql2}), otimizando o reuso de conexões físicas ativas no banco de dados e potencializando a concorrência de múltiplos acessos simultâneos.
+\end{itemize}
+
+\subsubsection{Tecnologias e SGBD Utilizados}
+Para consolidar o fluxo de dados do sistema, as seguintes ferramentas de software foram associadas:
+\begin{itemize}
+    \item \textbf{Node.js \& Express:} Ambiente de execução JavaScript no servidor e framework web minimalista para controle de middleware HTTP.
+    \item \textbf{Driver MySQL2:} Biblioteca client para conexão segura e execução assíncrona de queries SQL no SGBD.
+    \item \textbf{MySQL Workbench:} SGBD relacional oficial MySQL utilizado para modelagem visual de tabelas, criação de scripts DDL primários e administração de banco.
+\end{itemize}
+
+\end{document}

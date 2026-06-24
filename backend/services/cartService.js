@@ -49,13 +49,6 @@ async function checkoutCart(userId) {
 
     for (const item of items) {
       await connection.query('INSERT INTO Biblioteca (id_usuario, id_jogo, data_aquisicao, horas_jogadas) VALUES (?, ?, NOW(), 0.00)', [userId, item.id_jogo]);
-      await connection.query('INSERT INTO Atividades (id_usuario, id_jogo, tipo_atividade, descricao, visibilidade, data_hora) VALUES (?, ?, ?, ?, ?, NOW())', [
-        userId,
-        item.id_jogo,
-        'comprou',
-        `${user.nome} comprou ${item.titulo}`,
-        'publica'
-      ]);
     }
 
     await connection.query('DELETE FROM Carrinho WHERE id_usuario = ?', [userId]);

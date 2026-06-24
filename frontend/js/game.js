@@ -1,5 +1,5 @@
 // ==========================================================================
-// STIM - GAME DETAILS MULTI-PAGE SCRIPT
+// AETHER - GAME DETAILS MULTI-PAGE SCRIPT
 // ==========================================================================
 
 let gameDetailsMediaGallery = [];
@@ -287,7 +287,7 @@ async function buyGameDirect(gameId) {
                 body: { userId: currentUser.id_usuario, gameId }
             });
             currentUser.saldo_carteira = res.saldo_carteira;
-            localStorage.setItem('stim_user', JSON.stringify(currentUser));
+            localStorage.setItem('aether_user', JSON.stringify(currentUser));
             updateUserUI();
             alert('Compra efetuada com sucesso! O jogo foi adicionado à sua biblioteca.');
             window.location.href = 'library.html';

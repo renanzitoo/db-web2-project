@@ -1,5 +1,5 @@
 // ==========================================================================
-// STIM - PROFILE MULTI-PAGE SCRIPT
+// AETHER - PROFILE MULTI-PAGE SCRIPT
 // ==========================================================================
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -156,7 +156,7 @@ async function simulateDeposit(amount) {
             body: { amount }
         });
         currentUser.saldo_carteira = res.saldo_carteira;
-        localStorage.setItem('stim_user', JSON.stringify(currentUser));
+        localStorage.setItem('aether_user', JSON.stringify(currentUser));
         updateUserUI();
         document.getElementById('deposit-modal').classList.remove('open');
         alert(`R$ ${Number(amount).toFixed(2)} depositados com sucesso! Novo saldo: R$ ${Number(res.saldo_carteira).toFixed(2)}`);
